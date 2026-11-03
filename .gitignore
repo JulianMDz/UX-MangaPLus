@@ -1,0 +1,163 @@
+# =============================================================================
+# Dependencies
+# =============================================================================
+node_modules/
+.pnp
+.pnp.js
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.pnpm-store/
+
+# =============================================================================
+# Build output and framework caches
+# =============================================================================
+dist/
+build/
+out/
+.output/
+.astro/
+.vite/
+.cache/
+.parcel-cache/
+.turbo/
+.next/
+.nuxt/
+.svelte-kit/
+.docusaurus/
+*.tsbuildinfo
+
+# =============================================================================
+# Environment and secrets
+# =============================================================================
+.env
+.env.*
+!.env.example
+!.env.sample
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+secrets.json
+credentials.json
+
+# =============================================================================
+# Logs and runtime state
+# =============================================================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.astro-dev-server.*
+*.pid
+*.seed
+*.pid.lock
+
+# =============================================================================
+# Testing and coverage
+# =============================================================================
+coverage/
+*.lcov
+.nyc_output/
+test-results/
+playwright-report/
+playwright/.cache/
+.vitest/
+
+# =============================================================================
+# Temporary and generated files
+# =============================================================================
+tmp/
+temp/
+*.tmp
+*.temp
+*.bak
+*.swp
+*~
+.scratch/
+
+# =============================================================================
+# Tooling caches
+# =============================================================================
+.eslintcache
+.stylelintcache
+.prettiercache
+.npm/
+.node_repl_history
+.sass-cache/
+
+# =============================================================================
+# Deployment and infrastructure
+# =============================================================================
+.vercel/
+.netlify/
+.wrangler/
+.firebase/
+.serverless/
+terraform.tfstate
+terraform.tfstate.backup
+.terraform/
+
+# =============================================================================
+# Editors and IDEs
+# =============================================================================
+# JetBrains
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# VS Code: ignore local settings, keep shared configuration
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/settings.json
+!.vscode/*.code-snippets
+
+# Vim / Emacs / Sublime
+*.sublime-workspace
+.netrwhist
+[._]*.s[a-v][a-z]
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+\#*\#
+.\#*
+*~
+
+# Claude Code local settings
+.claude/settings.local.json
+.claude/*.local.*
+
+# =============================================================================
+# Operating system files
+# =============================================================================
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+.Trash-*
+.directory
