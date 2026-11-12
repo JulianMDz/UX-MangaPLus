@@ -1,0 +1,15 @@
+---
+import Base from "../layouts/Base.astro";
+import Navbar from "../components/Navbar";
+import Profile from "../components/profile/Profile";
+import { getCoverMap } from "../lib/optimized-covers";
+
+const covers = await getCoverMap();
+---
+
+<Base title="Manga Plus | Mi perfil">
+    <Navbar current="perfil" client:load />
+    <main class="px-4 py-8">
+        <Profile covers={covers} client:only="react" />
+    </main>
+</Base>

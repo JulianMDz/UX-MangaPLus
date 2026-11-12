@@ -1,0 +1,93 @@
+---
+import { Image } from "astro:assets";
+import Base from "../../layouts/Base.astro";
+import Navbar from "../../components/Navbar";
+import MangaCard from "../../components/MangaCard.astro";
+import StatusBadge from "../../components/StatusBadge";
+import MangaActions from "../../components/manga/MangaActions";
+import ChapterList from "../../components/manga/ChapterList";
+import { getManga, isReadable, mangas, type Manga } from "../../data/mangas";
+import { getCover } from "../../lib/images";
+
+export function getStaticPaths() {
+    return mangas.map((manga) => ({ params: { id: manga.id }, props: { manga } }));
+}
+
+const NOTICE: Record<Manga["status"], string> = {
+    available: "Disponible para leer",
+    airing: "En emisión: se publican nuevos capítulos",
+    soon: "Todavía no se puede leer",
+    unavailable: "No disponible en tu región por ahora",
+};
+
+const { manga } = Astro.props;
+const cover = getCover(manga.cover);
+const readable = isReadable(manga);
+const related = manga.related.map(getManga).filter((m): m is Manga => !!m);
+---
+
+<Base title={`Manga Plus | ${manga.title}`} description={manga.description}>
+    <Navbar current="inicio" client:load />
+    <main class="mx-auto max-w-6xl px-4 py-8">
+        <article class="flex flex-col gap-8 rounded-2xl border border-line bg-panel p-6 md:flex-row">
+            {
+                cover ? (
+                    <Image
+                        src={cover}
+                        alt={`Portada de ${manga.title}`}
+                        widths={[192, 384]}
+                        sizes="192px"
+                        loading="eager"
+                        fetchpriority="high"
+                        class="aspect-[2/3] w-48 shrink-0 self-center rounded-lg object-cover md:self-start"
+                    />
+                ) : (
+                    <div class="grid aspect-[2/3] w-48 shrink-0 place-items-center self-center rounded-lg bg-surface p-2 text-center font-semibold md:self-start">
+                        {manga.title}
+                    </div>
+                )
+            }
+
+            <div class="flex-1">
+                <p class="text-xs text-muted">
+                    {manga.genre} · ★ {manga.rating} · {manga.chapters} capítulos
+                </p>
+                <h1 class="mt-1 text-4xl font-bold">{manga.title}</h1>
+
+                <p role="status" class="mt-3 flex items-center gap-3 rounded-lg border border-line bg-surface px-4 py-2 text-sm">
+                    <StatusBadge status={manga.status} />
+                    {NOTICE[manga.status]}
+                    {manga.status === "soon" && manga.releaseLabel && ` · ${manga.releaseLabel}`}
+                </p>
+
+                <p class="mt-4 text-sm text-muted">{manga.description}</p>
+
+                <MangaActions id={manga.id} readable={readable} chapters={manga.chapters} client:only="react" />
+            </div>
+        </article>
+
+        {
+            readable && (
+                <section class="mt-8" aria-labelledby="chapters-title">
+                    <h2 id="chapters-title" class="text-xl font-bold">
+                        Capítulos
+                    </h2>
+                    <ChapterList id={manga.id} chapters={manga.chapters} client:only="react" />
+                </section>
+            )
+        }
+
+        <section class="mt-10" aria-labelledby="related-title">
+            <h2 id="related-title" class="text-xl font-bold">Relacionado con</h2>
+            <ul class="mt-4 grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-5">
+                {
+                    related.map((m) => (
+                        <li>
+                            <MangaCard manga={m} />
+                        </li>
+                    ))
+                }
+            </ul>
+        </section>
+    </main>
+</Base>
