@@ -7,8 +7,12 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "dev:v1": "astro dev --root prototypes/v1",
+    "build": "node scripts/check.mjs && node scripts/build-all.mjs",
+    "check": "node scripts/check.mjs",
+    "freeze": "node scripts/freeze.mjs",
     "preview": "astro preview",
+    "new-version": "node scripts/new-version.mjs",
     "astro": "astro"
   },
   "dependencies": {

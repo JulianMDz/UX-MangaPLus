@@ -1,7 +1,6 @@
-@import "tailwindcss";
+/* source("../") limita el escaneo de clases al hub y evita recorrer prototypes/ */
+@import "tailwindcss" source("../");
 
-/* Tokens de diseño: Tailwind genera utilidades a partir de ellos
-   (bg-surface, text-accent, border-line, text-status-soon, etc.) */
 @theme {
   --color-base: #0f0f14;
   --color-panel: #121218;
@@ -22,11 +21,4 @@
   body {
     @apply min-h-screen bg-base font-sans text-white;
   }
-}
-
-/* Fondo de puntos del collage */
-@utility bg-dots {
-  background:
-    radial-gradient(circle at 1px 1px, #2a2a36 1px, transparent 0) 0 0 / 12px 12px,
-    var(--color-base);
 }

@@ -1,12 +1,106 @@
 ---
+import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
-import Navbar from "../components/Navbar";
-import HomeCatalog from "../components/home/HomeCatalog";
+import { prototypeExists } from "../lib/versions";
+
+const iterations = (await getCollection("iterations")).sort(
+    (a, b) => Number(a.data.version.slice(1)) - Number(b.data.version.slice(1)),
+);
+
+const STATUS_LABEL = {
+    planificada: "Planificada",
+    "en-pruebas": "En pruebas",
+    completada: "Completada",
+} as const;
+
+const STATUS_CLASS = {
+    planificada: "text-muted",
+    "en-pruebas": "text-status-soon",
+    completada: "text-status-available",
+} as const;
+
+const dateFormat = new Intl.DateTimeFormat("es", { dateStyle: "long", timeZone: "UTC" });
 ---
 
-<Base title="Manga Plus | Inicio">
-    <Navbar current="inicio" client:load />
-    <main class="mx-auto max-w-6xl px-4 py-8">
-        <HomeCatalog client:only="react" />
+<Base title="Manga Plus | Evolución del prototipo">
+    <main class="mx-auto max-w-4xl px-4 py-12">
+        <section aria-labelledby="intro-title">
+            <p class="text-sm text-accent">Reto de rediseño UX</p>
+            <h1 id="intro-title" class="mt-1 text-4xl font-bold">Cómo evolucionó el prototipo</h1>
+            <p class="mt-4 max-w-2xl text-muted">
+                Cada versión se probó con usuarios reales. Aquí puedes ver qué se probó, qué se encontró y qué se
+                cambió en la siguiente, y navegar cada versión tal como la vieron los participantes.
+            </p>
+        </section>
+
+        <section id="timeline" class="mt-12" aria-labelledby="timeline-title">
+            <h2 id="timeline-title" class="text-2xl font-bold">Línea de tiempo</h2>
+
+            <ol class="relative mt-8 space-y-8 border-l border-line pl-8">
+                {
+                    iterations.map(({ data, id }) => (
+                        <li class="relative">
+                            <span
+                                aria-hidden="true"
+                                class:list={[
+                                    "absolute top-2 -left-[2.4rem] size-4 rounded-full border-2 border-base",
+                                    data.status === "planificada" ? "bg-line" : "bg-accent",
+                                ]}
+                            />
+                            <article class="rounded-2xl border border-line bg-panel p-6">
+                                <div class="flex flex-wrap items-center gap-3">
+                                    <span class="rounded-full bg-white px-3 py-0.5 text-sm font-bold text-base">
+                                        {data.version}
+                                    </span>
+                                    <h3 class="text-xl font-bold">{data.title}</h3>
+                                    <span class:list={["ml-auto text-xs", STATUS_CLASS[data.status]]}>
+                                        {STATUS_LABEL[data.status]}
+                                    </span>
+                                </div>
+
+                                <p class="mt-2 text-xs text-muted">
+                                    {data.fecha ? dateFormat.format(data.fecha) : "Fecha por definir"}
+                                    {data.participantes ? ` · ${data.participantes} participantes` : ""}
+                                </p>
+
+                                {data.metricas.length > 0 ? (
+                                    <dl class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                                        {data.metricas.map((metrica) => (
+                                            <div class="rounded-lg bg-surface p-3">
+                                                <dd class="text-2xl font-bold">{metrica.valor}</dd>
+                                                <dt class="text-xs text-muted">{metrica.nombre}</dt>
+                                            </div>
+                                        ))}
+                                    </dl>
+                                ) : (
+                                    <p class="mt-4 text-sm text-muted">Resultados pendientes de esta ronda.</p>
+                                )}
+
+                                <div class="mt-5 flex flex-wrap gap-3">
+                                    {prototypeExists(data.version) ? (
+                                        <a
+                                            href={`/${data.version}/`}
+                                            class="rounded-full bg-accent px-5 py-2 text-sm font-semibold transition-colors hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                                        >
+                                            Abrir prototipo {data.version}
+                                        </a>
+                                    ) : (
+                                        <span class="rounded-full border border-line px-5 py-2 text-sm text-muted">
+                                            Prototipo aún no disponible
+                                        </span>
+                                    )}
+                                    <a
+                                        href={`/rondas/${id}/`}
+                                        class="rounded-full border border-white px-5 py-2 text-sm font-semibold transition-colors hover:bg-white hover:text-base focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                                    >
+                                        Ver ronda de pruebas
+                                    </a>
+                                </div>
+                            </article>
+                        </li>
+                    ))
+                }
+            </ol>
+        </section>
     </main>
 </Base>

@@ -1,11 +1,9 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import react from '@astrojs/react';
 import tailwindcss from '@tailwindcss/vite';
 
-// https://astro.build/config
+// Hub del showcase. Los prototipos viven en prototypes/vN con su propia configuración.
 export default defineConfig({
-  integrations: [react()],
   vite: {
     plugins: [tailwindcss()],
   },
