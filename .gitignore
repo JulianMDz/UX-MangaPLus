@@ -161,3 +161,9 @@ $RECYCLE.BIN/
 # Linux
 .Trash-*
 .directory
+
+# =============================================================================
+# Material de estudio personal (vault de Obsidian): no se sube a GitHub
+# =============================================================================
+vault/
+.obsidian/

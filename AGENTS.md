@@ -87,6 +87,8 @@ scripts/                   check · freeze · new-version · build-all
 - No desactives ni saltes `npm run check` en el build.
 - No escribas en `localStorage` ni uses rutas absolutas "solo esta vez".
 - **No hagas commits, stash, push ni cambies de rama salvo que se pida explícitamente.** El equipo commitea a mano.
+- `vault/` es material de estudio personal (Obsidian), ignorado por Git y ajeno al proyecto: no lo edites, no lo
+  muevas y no lo incluyas en commits. Solo se actualiza si el dueño del vault lo pide.
 
 ## Si `npm run check` falla
 
