@@ -1,3 +1,4 @@
+import { url } from "../lib/paths";
 import type { Manga } from "../data/mangas";
 import Cover from "./Cover";
 import StatusBadge from "./StatusBadge";
@@ -5,7 +6,7 @@ import StatusBadge from "./StatusBadge";
 export default function MangaCard({ manga }: { manga: Manga }) {
     return (
         <a
-            href={`/manga/${manga.id}`}
+            href={url(`/manga/${manga.id}`)}
             className="group block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
         >
             <div className="relative aspect-[2/3] overflow-hidden rounded-lg bg-surface">

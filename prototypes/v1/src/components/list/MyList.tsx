@@ -1,3 +1,4 @@
+import { url } from "../../lib/paths";
 import { useState } from "react";
 import { getManga, isReadable, type Manga } from "../../data/mangas";
 import { getList, LIST_LABELS, type ListState } from "../../lib/storage";
@@ -18,14 +19,14 @@ function Item({ manga }: { manga: Manga }) {
                 <p className="text-xs text-muted">{manga.releaseLabel && manga.status === "soon" ? `Sale el ${manga.releaseLabel}` : manga.genre}</p>
                 <div className="mt-1 flex gap-2">
                     <a
-                        href={`/manga/${manga.id}`}
+                        href={url(`/manga/${manga.id}`)}
                         className="rounded-full border border-white px-5 py-1.5 text-sm font-semibold transition-colors hover:bg-white hover:text-base"
                     >
                         Ver detalles
                     </a>
                     {readable && (
                         <a
-                            href={`/leer/${manga.id}/1`}
+                            href={url(`/leer/${manga.id}/1`)}
                             className="rounded-full bg-accent px-5 py-1.5 text-sm font-semibold transition-colors hover:bg-red-600"
                         >
                             Empezar a leer
@@ -85,7 +86,7 @@ function MyListContent() {
             {visible.length === 0 ? (
                 <div className="mt-10 rounded-xl border border-dashed border-line p-10 text-center">
                     <p className="text-muted">Aún no tienes mangas en “{LIST_LABELS[tab]}”.</p>
-                    <a href="/" className="mt-4 inline-block rounded-full bg-accent px-6 py-2 text-sm font-semibold hover:bg-red-600">
+                    <a href={url("/")} className="mt-4 inline-block rounded-full bg-accent px-6 py-2 text-sm font-semibold hover:bg-red-600">
                         Explorar mangas
                     </a>
                 </div>

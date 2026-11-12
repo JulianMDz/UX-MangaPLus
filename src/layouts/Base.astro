@@ -6,7 +6,8 @@ interface Props {
     description?: string;
 }
 
-const { title, description = "Manga Plus es una plataforma para leer manga online." } = Astro.props;
+const { title, description = "Evolución del rediseño de Manga Plus a través de rondas de pruebas con usuarios." } =
+    Astro.props;
 ---
 
 <!doctype html>
@@ -16,10 +17,17 @@ const { title, description = "Manga Plus es una plataforma para leer manga onlin
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content={description} />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
         <title>{title}</title>
     </head>
     <body>
+        <header class="border-b border-line">
+            <nav class="mx-auto flex max-w-4xl items-center justify-between px-4 py-4">
+                <a href="/" class="font-bold">
+                    <span class="text-accent">MANGA PLUS</span> · Rediseño
+                </a>
+                <a href="/#timeline" class="text-sm text-muted transition-colors hover:text-white">Evolución</a>
+            </nav>
+        </header>
         <slot />
     </body>
 </html>

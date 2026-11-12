@@ -1,14 +1,10 @@
+import { url } from "../../lib/paths";
 import { useState, type FormEvent } from "react";
+import { setSession, type Session } from "../../lib/storage";
 
-const SESSION_KEY = "mangaplus:session";
-
-function startSession(session: { email: string; guest: boolean }) {
-    try {
-        localStorage.setItem(SESSION_KEY, JSON.stringify(session));
-    } catch {
-        // localStorage puede no estar disponible (modo privado); seguimos igual.
-    }
-    window.location.href = "/";
+function startSession(session: Session) {
+    setSession(session);
+    window.location.href = url("/");
 }
 
 const inputClass =

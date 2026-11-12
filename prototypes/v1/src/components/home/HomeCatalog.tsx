@@ -1,3 +1,4 @@
+import { url } from "../../lib/paths";
 import { useMemo, useState } from "react";
 import { getManga, isReadable, mangas, type Manga } from "../../data/mangas";
 import { getPrefs } from "../../lib/storage";
@@ -43,7 +44,7 @@ function HomeCatalogContent() {
                             <span className="text-xs text-muted">{featured.chapters} Capítulos · España</span>
                         </div>
                         <a
-                            href={`/manga/${featured.id}`}
+                            href={url(`/manga/${featured.id}`)}
                             className="mt-5 inline-block rounded-full bg-accent px-6 py-2.5 text-sm font-semibold transition-colors hover:bg-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                         >
                             Leer más

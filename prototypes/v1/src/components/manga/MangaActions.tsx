@@ -1,3 +1,4 @@
+import { url } from "../../lib/paths";
 import { useState } from "react";
 import { getList, getProgress, LIST_LABELS, setListState, type ListState } from "../../lib/storage";
 
@@ -24,7 +25,7 @@ export default function MangaActions({ id, readable, chapters }: Props) {
         <div className="mt-5 flex flex-wrap items-center gap-3">
             {readable ? (
                 <a
-                    href={`/leer/${id}/${nextChapter}`}
+                    href={url(`/leer/${id}/${nextChapter}`)}
                     className="rounded-full bg-accent px-6 py-2.5 text-sm font-semibold transition-colors hover:bg-red-600"
                 >
                     {progress > 0 ? `Continuar: capítulo ${nextChapter}` : "Empezar a leer"}

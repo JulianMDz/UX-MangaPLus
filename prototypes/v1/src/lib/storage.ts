@@ -1,4 +1,5 @@
 // Único punto de acceso a localStorage. Si un día hay backend, solo cambia este archivo.
+import { VERSION } from "./paths";
 
 export type ListState = "want" | "reading" | "read";
 export interface Session {
@@ -16,11 +17,13 @@ export const LIST_LABELS: Record<ListState, string> = {
     read: "Leídos",
 };
 
+// Las claves llevan el nombre de la versión: v1, v2 y v3 comparten origen en el deploy
+// y sin este prefijo se pisarían la sesión, la lista y el progreso.
 const KEYS = {
-    session: "mangaplus:session",
-    list: "mangaplus:list",
-    prefs: "mangaplus:prefs",
-    progress: "mangaplus:progress",
+    session: `mangaplus:${VERSION}:session`,
+    list: `mangaplus:${VERSION}:list`,
+    prefs: `mangaplus:${VERSION}:prefs`,
+    progress: `mangaplus:${VERSION}:progress`,
 };
 
 function load<T>(key: string, fallback: T): T {
@@ -41,6 +44,7 @@ function save(key: string, value: unknown) {
 }
 
 export const getSession = () => load<Session | null>(KEYS.session, null);
+export const setSession = (session: Session) => save(KEYS.session, session);
 export function endSession() {
     try {
         localStorage.removeItem(KEYS.session);

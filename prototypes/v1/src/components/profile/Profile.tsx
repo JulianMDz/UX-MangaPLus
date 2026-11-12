@@ -1,3 +1,4 @@
+import { url } from "../../lib/paths";
 import { useState } from "react";
 import { getManga } from "../../data/mangas";
 import { endSession, getList, getPrefs, getSession, setPrefs, type Prefs } from "../../lib/storage";
@@ -52,7 +53,7 @@ function ProfileContent() {
 
     function logout() {
         endSession();
-        window.location.href = "/login";
+        window.location.href = url("/login");
     }
 
     return (
@@ -74,7 +75,7 @@ function ProfileContent() {
                     </svg>
                 </div>
                 <p className="flex-1 text-2xl font-bold capitalize">{name}</p>
-                <a href={`/manga/${favorite.id}`} className="flex items-center gap-3 text-xs text-muted">
+                <a href={url(`/manga/${favorite.id}`)} className="flex items-center gap-3 text-xs text-muted">
                     <Cover manga={favorite} sizes="40px" className="h-14 w-10 rounded-sm" />
                     <span>
                         Manga favorito

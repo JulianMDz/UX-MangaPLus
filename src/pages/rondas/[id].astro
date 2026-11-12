@@ -1,0 +1,100 @@
+---
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import { prototypeExists } from "../../lib/versions";
+
+export async function getStaticPaths() {
+    const iterations = await getCollection("iterations");
+    return iterations.map((entry) => ({ params: { id: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+
+const SEVERITY_CLASS = {
+    alta: "text-status-unavailable",
+    media: "text-status-soon",
+    baja: "text-status-available",
+} as const;
+---
+
+<Base title={`Manga Plus | Ronda ${data.version}`}>
+    <main class="mx-auto max-w-4xl px-4 py-12">
+        <a href="/#timeline" class="text-sm text-muted transition-colors hover:text-white">← Volver a la línea de tiempo</a>
+
+        <p class="mt-6 text-sm text-accent">Ronda de pruebas {data.version}</p>
+        <h1 class="mt-1 text-4xl font-bold">{data.title}</h1>
+        {data.metodo && <p class="mt-2 text-sm text-muted">{data.metodo}</p>}
+
+        <div class="prose-content mt-6 max-w-2xl space-y-4 text-muted [&_strong]:text-white [&_blockquote]:border-l-2 [&_blockquote]:border-accent [&_blockquote]:pl-4">
+            <Content />
+        </div>
+
+        {
+            prototypeExists(data.version) && (
+                <a
+                    href={`/${data.version}/`}
+                    class="mt-6 inline-block rounded-full bg-accent px-5 py-2 text-sm font-semibold transition-colors hover:bg-red-600"
+                >
+                    Abrir prototipo {data.version}
+                </a>
+            )
+        }
+
+        {
+            data.tareas.length > 0 && (
+                <section class="mt-10" aria-labelledby="tareas-title">
+                    <h2 id="tareas-title" class="text-xl font-bold">Tareas probadas</h2>
+                    <ol class="mt-3 list-decimal space-y-2 pl-6 text-muted">
+                        {data.tareas.map((tarea) => (
+                            <li>{tarea}</li>
+                        ))}
+                    </ol>
+                </section>
+            )
+        }
+
+        {
+            data.hallazgos.length > 0 && (
+                <section class="mt-10" aria-labelledby="hallazgos-title">
+                    <h2 id="hallazgos-title" class="text-xl font-bold">Hallazgos y decisiones</h2>
+                    <ul class="mt-3 divide-y divide-line overflow-hidden rounded-xl border border-line bg-panel">
+                        {data.hallazgos.map((hallazgo) => (
+                            <li class="p-4">
+                                <p class="font-semibold">
+                                    {hallazgo.problema}
+                                    <span class:list={["ml-2 text-xs font-normal", SEVERITY_CLASS[hallazgo.severidad]]}>
+                                        Severidad {hallazgo.severidad}
+                                    </span>
+                                </p>
+                                <p class="mt-1 text-sm text-muted">Decisión: {hallazgo.decision}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            )
+        }
+
+        {
+            data.cambios.length > 0 && (
+                <section class="mt-10" aria-labelledby="cambios-title">
+                    <h2 id="cambios-title" class="text-xl font-bold">Qué cambió en la siguiente versión</h2>
+                    <ul class="mt-3 space-y-3">
+                        {data.cambios.map((cambio) => (
+                            <li class="rounded-xl border border-line bg-panel p-4 text-sm">
+                                <p class="text-muted">
+                                    <span class="font-semibold text-status-unavailable">Antes:</span> {cambio.antes}
+                                </p>
+                                <p class="mt-1 text-muted">
+                                    <span class="font-semibold text-status-available">Después:</span> {cambio.despues}
+                                </p>
+                                <p class="mt-2 text-xs text-muted">Motivo: {cambio.motivo}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
+            )
+        }
+    </main>
+</Base>

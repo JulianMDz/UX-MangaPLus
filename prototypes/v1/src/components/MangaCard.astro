@@ -1,4 +1,5 @@
 ---
+import { url } from "../lib/paths";
 import { Image } from "astro:assets";
 import type { Manga } from "../data/mangas";
 import { getCover } from "../lib/images";
@@ -13,7 +14,7 @@ const cover = getCover(manga.cover);
 ---
 
 <a
-    href={`/manga/${manga.id}`}
+    href={url(`/manga/${manga.id}`)}
     class="group block rounded-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
 >
     <div class="relative aspect-[2/3] overflow-hidden rounded-lg bg-surface">

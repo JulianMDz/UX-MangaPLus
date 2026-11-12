@@ -1,3 +1,4 @@
+import { url } from "../../lib/paths";
 import { useState } from "react";
 import { getProgress } from "../../lib/storage";
 
@@ -16,7 +17,7 @@ export default function ChapterList({ id, chapters }: Props) {
             {Array.from({ length: Math.min(chapters, VISIBLE_CHAPTERS) }, (_, i) => i + 1).map((n) => (
                 <li key={n}>
                     <a
-                        href={`/leer/${id}/${n}`}
+                        href={url(`/leer/${id}/${n}`)}
                         className="flex items-center justify-between px-4 py-3 text-sm transition-colors hover:bg-white/5"
                     >
                         <span>Capítulo {n}</span>

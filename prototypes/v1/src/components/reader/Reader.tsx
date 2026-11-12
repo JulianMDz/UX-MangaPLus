@@ -1,3 +1,4 @@
+import { url } from "../../lib/paths";
 import { useEffect, useState } from "react";
 import { getList, setListState, setProgress } from "../../lib/storage";
 import { getManga, PAGES_PER_CHAPTER } from "../../data/mangas";
@@ -41,7 +42,7 @@ export default function Reader({ id, chapter }: Props) {
         <div className="flex min-h-screen flex-col bg-base">
             <header className="grid grid-cols-3 items-center border-b border-line px-4 py-3 text-xs">
                 <a
-                    href={`/manga/${id}`}
+                    href={url(`/manga/${id}`)}
                     className="w-fit rounded-full border border-accent px-4 py-1.5 text-accent transition-colors hover:bg-accent hover:text-white"
                 >
                     Volver al detalle
@@ -100,7 +101,7 @@ export default function Reader({ id, chapter }: Props) {
                     <div className="mt-6 text-center">
                         <p className="text-sm text-muted">Terminaste el capítulo {chapter}.</p>
                         <a
-                            href={hasNext ? `/leer/${id}/${chapter + 1}` : `/manga/${id}`}
+                            href={url(hasNext ? `/leer/${id}/${chapter + 1}` : `/manga/${id}`)}
                             className="mt-3 inline-block rounded-full bg-accent px-6 py-2.5 text-sm font-semibold transition-colors hover:bg-red-600"
                         >
                             {hasNext ? "Siguiente capítulo" : "Volver al detalle"}
