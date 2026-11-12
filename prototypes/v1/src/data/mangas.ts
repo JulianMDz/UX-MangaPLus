@@ -174,4 +174,5 @@ export function isReadable(manga: Manga): boolean {
     return manga.status === "available" || manga.status === "airing";
 }
 
+// Páginas del placeholder: se usa solo en capítulos sin contenido real (src/assets/mangas).
 export const PAGES_PER_CHAPTER = 38;

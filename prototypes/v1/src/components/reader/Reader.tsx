@@ -6,15 +6,18 @@ import { getManga, PAGES_PER_CHAPTER } from "../../data/mangas";
 interface Props {
     id: string;
     chapter: number;
+    /** src de cada página real del capítulo. Vacío = placeholder como antes. */
+    pages: string[];
 }
 
 const arrowClass =
     "grid h-12 w-16 shrink-0 cursor-pointer place-items-center rounded-full border-2 text-xl transition-all disabled:cursor-not-allowed disabled:opacity-30 motion-safe:enabled:hover:scale-105";
 
-export default function Reader({ id, chapter }: Props) {
+export default function Reader({ id, chapter, pages }: Props) {
     const manga = getManga(id)!;
     const [page, setPage] = useState(1);
-    const lastPage = page === PAGES_PER_CHAPTER;
+    const total = pages.length > 0 ? pages.length : PAGES_PER_CHAPTER;
+    const lastPage = page === total;
     const hasNext = chapter < manga.chapters;
 
     // Al abrir un capítulo, el manga pasa a "Leyendo" si no estaba en la lista.
@@ -31,12 +34,12 @@ export default function Reader({ id, chapter }: Props) {
 
     useEffect(() => {
         const onKey = (e: KeyboardEvent) => {
-            if (e.key === "ArrowRight") setPage((p) => Math.min(p + 1, PAGES_PER_CHAPTER));
+            if (e.key === "ArrowRight") setPage((p) => Math.min(p + 1, total));
             if (e.key === "ArrowLeft") setPage((p) => Math.max(p - 1, 1));
         };
         window.addEventListener("keydown", onKey);
         return () => window.removeEventListener("keydown", onKey);
-    }, []);
+    }, [total]);
 
     return (
         <div className="flex min-h-screen flex-col bg-base">
@@ -51,7 +54,7 @@ export default function Reader({ id, chapter }: Props) {
                     {manga.title} · Cap. {chapter}
                 </p>
                 <p className="text-right text-muted" aria-live="polite">
-                    Página {page} de {PAGES_PER_CHAPTER}
+                    Página {page} de {total}
                 </p>
             </header>
 
@@ -65,13 +68,22 @@ export default function Reader({ id, chapter }: Props) {
                     ←
                 </button>
 
-                <div
-                    role="img"
-                    aria-label={`Página ${page} de ${PAGES_PER_CHAPTER}`}
-                    className="grid aspect-[3/4] w-full max-w-md place-items-center rounded-sm bg-white text-6xl font-bold text-black/20"
-                >
-                    {page}
-                </div>
+                {pages.length > 0 ? (
+                    <img
+                        src={pages[page - 1]}
+                        alt={`Página ${page} de ${total}`}
+                        loading="eager"
+                        className="max-h-[80vh] w-auto max-w-md rounded-sm bg-white"
+                    />
+                ) : (
+                    <div
+                        role="img"
+                        aria-label={`Página ${page} de ${total}`}
+                        className="grid aspect-[3/4] w-full max-w-md place-items-center rounded-sm bg-white text-6xl font-bold text-black/20"
+                    >
+                        {page}
+                    </div>
+                )}
 
                 <button
                     onClick={() => setPage((p) => p + 1)}
@@ -87,13 +99,13 @@ export default function Reader({ id, chapter }: Props) {
                 <div
                     role="progressbar"
                     aria-valuemin={1}
-                    aria-valuemax={PAGES_PER_CHAPTER}
+                    aria-valuemax={total}
                     aria-valuenow={page}
                     className="h-1.5 overflow-hidden rounded-full bg-surface"
                 >
                     <div
                         className="h-full bg-accent transition-[width] duration-200"
-                        style={{ width: `${(page / PAGES_PER_CHAPTER) * 100}%` }}
+                        style={{ width: `${(page / total) * 100}%` }}
                     />
                 </div>
 
