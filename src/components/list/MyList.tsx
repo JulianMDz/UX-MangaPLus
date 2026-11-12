@@ -2,6 +2,7 @@ import { useState } from "react";
 import { getManga, isReadable, type Manga } from "../../data/mangas";
 import { getList, LIST_LABELS, type ListState } from "../../lib/storage";
 import Cover from "../Cover";
+import { CoverProvider, type CoverMap } from "../CoverContext";
 import StatusBadge from "../StatusBadge";
 
 const TABS: ListState[] = ["want", "reading", "read"];
@@ -10,7 +11,7 @@ function Item({ manga }: { manga: Manga }) {
     const readable = isReadable(manga);
     return (
         <li className="flex gap-4 rounded-xl border border-line bg-surface p-3">
-            <Cover manga={manga} className="aspect-[2/3] w-28 shrink-0 rounded-md" />
+            <Cover manga={manga} sizes="112px" className="aspect-[2/3] w-28 shrink-0 rounded-md" />
             <div className="flex flex-1 flex-col items-center justify-center gap-2 text-center">
                 <h3 className="text-xl font-bold">{manga.title}</h3>
                 <StatusBadge status={manga.status} />
@@ -36,7 +37,7 @@ function Item({ manga }: { manga: Manga }) {
     );
 }
 
-export default function MyList() {
+function MyListContent() {
     const [list] = useState(getList);
     const [tab, setTab] = useState<ListState>("want");
 
@@ -96,5 +97,13 @@ export default function MyList() {
                 </ul>
             )}
         </>
+    );
+}
+
+export default function MyList({ covers }: { covers: CoverMap }) {
+    return (
+        <CoverProvider value={covers}>
+            <MyListContent />
+        </CoverProvider>
     );
 }

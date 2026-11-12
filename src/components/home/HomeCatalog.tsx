@@ -4,6 +4,7 @@ import { getPrefs } from "../../lib/storage";
 import MangaCard from "../MangaCard";
 import StatusBadge from "../StatusBadge";
 import Cover from "../Cover";
+import { CoverProvider, type CoverMap } from "../CoverContext";
 
 const FILTERS = [
     { id: "popular", label: "Populares", test: (m: Manga) => m.tags.includes("popular") },
@@ -12,7 +13,7 @@ const FILTERS = [
     { id: "soon", label: "Próximos", test: (m: Manga) => m.status === "soon" },
 ] as const;
 
-export default function HomeCatalog() {
+function HomeCatalogContent() {
     const [filter, setFilter] = useState<(typeof FILTERS)[number]["id"]>("popular");
     const [onlyAvailable] = useState(() => getPrefs().onlyAvailable);
     const [query] = useState(() => new URLSearchParams(window.location.search).get("q")?.trim() ?? "");
@@ -48,7 +49,7 @@ export default function HomeCatalog() {
                             Leer más
                         </a>
                     </div>
-                    <Cover manga={featured} className="hidden size-48 shrink-0 rounded-full md:block" />
+                    <Cover manga={featured} sizes="192px" className="hidden size-48 shrink-0 rounded-full md:block" />
                 </div>
             </section>
 
@@ -90,5 +91,13 @@ export default function HomeCatalog() {
                 )}
             </section>
         </>
+    );
+}
+
+export default function HomeCatalog({ covers }: { covers: CoverMap }) {
+    return (
+        <CoverProvider value={covers}>
+            <HomeCatalogContent />
+        </CoverProvider>
     );
 }

@@ -11,6 +11,7 @@ export default function MangaCard({ manga }: { manga: Manga }) {
             <div className="relative aspect-[2/3] overflow-hidden rounded-lg bg-surface">
                 <Cover
                     manga={manga}
+                    sizes="(min-width: 1024px) 16vw, (min-width: 768px) 25vw, (min-width: 640px) 33vw, 50vw"
                     className="size-full transition-transform duration-300 motion-safe:group-hover:scale-105"
                 />
                 <div className="absolute inset-x-0 top-2 flex justify-center">

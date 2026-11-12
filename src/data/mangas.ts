@@ -19,7 +19,7 @@ export const mangas: Manga[] = [
     {
         id: "dragon-ball",
         title: "Dragon Ball",
-        cover: "/covers/dragon-ball.jpg",
+        cover: "dragon-ball",
         status: "available",
         genre: "Acción · Aventura",
         description:
@@ -32,7 +32,7 @@ export const mangas: Manga[] = [
     {
         id: "kimetsu-no-yaiba",
         title: "Kimetsu no yaiba",
-        cover: "/covers/kimetsu-no-yaiba.jpg",
+        cover: "kimetsu-no-yaiba",
         status: "available",
         genre: "Shonen · Acción",
         description:
@@ -45,7 +45,7 @@ export const mangas: Manga[] = [
     {
         id: "blue-lock",
         title: "Blue Lock",
-        cover: "/covers/blue-lock.jpg",
+        cover: "blue-lock",
         status: "airing",
         genre: "Shonen · Deportes",
         description:
@@ -58,7 +58,7 @@ export const mangas: Manga[] = [
     {
         id: "one-piece",
         title: "One Piece",
-        cover: "/covers/one-piece.jpg",
+        cover: "one-piece",
         status: "soon",
         genre: "Shonen · Aventura",
         description:
@@ -73,7 +73,7 @@ export const mangas: Manga[] = [
     {
         id: "bleach",
         title: "Bleach",
-        cover: "/covers/bleach.jpg",
+        cover: "bleach",
         status: "unavailable",
         genre: "Shonen · Sobrenatural",
         description:
@@ -86,7 +86,7 @@ export const mangas: Manga[] = [
     {
         id: "boku-no-hero",
         title: "Boku no hero",
-        cover: "/covers/boku-no-hero.jpg",
+        cover: "boku-no-hero",
         status: "available",
         genre: "Shonen · Superhéroes",
         description:
@@ -99,7 +99,7 @@ export const mangas: Manga[] = [
     {
         id: "chainsaw-man",
         title: "Chainsawman",
-        cover: "/covers/chainsaw-man.jpg",
+        cover: "chainsaw-man",
         status: "airing",
         genre: "Shonen · Oscuro",
         description:
@@ -112,7 +112,7 @@ export const mangas: Manga[] = [
     {
         id: "spy-x-family",
         title: "Spy x Family",
-        cover: "/covers/spy-family.jpg",
+        cover: "spy-family",
         status: "available",
         genre: "Comedia · Acción",
         description:
@@ -125,7 +125,7 @@ export const mangas: Manga[] = [
     {
         id: "one-punch-man",
         title: "One punch man",
-        cover: "/covers/one-punch-man.jpg",
+        cover: "one-punch-man",
         status: "airing",
         genre: "Lucha · Comedia",
         description:
@@ -139,7 +139,7 @@ export const mangas: Manga[] = [
     {
         id: "naruto",
         title: "Naruto",
-        cover: "/covers/naruto.jpg",
+        cover: "naruto",
         status: "available",
         genre: "Aventura · Ninjas",
         description:
@@ -152,7 +152,7 @@ export const mangas: Manga[] = [
     {
         id: "tokyo-ghoul",
         title: "Tokyo Ghoul",
-        cover: "/covers/tokyo-ghoul.jpg",
+        cover: "tokyo-ghoul",
         status: "soon",
         genre: "Fantasía oscura",
         description:

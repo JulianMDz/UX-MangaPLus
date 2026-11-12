@@ -2,6 +2,7 @@ import { useState } from "react";
 import { getManga } from "../../data/mangas";
 import { endSession, getList, getPrefs, getSession, setPrefs, type Prefs } from "../../lib/storage";
 import Cover from "../Cover";
+import { CoverProvider, type CoverMap } from "../CoverContext";
 
 interface ToggleProps {
     label: string;
@@ -28,7 +29,7 @@ function Toggle({ label, checked, onChange }: ToggleProps) {
     );
 }
 
-export default function Profile() {
+function ProfileContent() {
     const [session] = useState(getSession);
     const [prefs, setPrefsState] = useState<Prefs>(getPrefs);
     const [list] = useState(getList);
@@ -74,7 +75,7 @@ export default function Profile() {
                 </div>
                 <p className="flex-1 text-2xl font-bold capitalize">{name}</p>
                 <a href={`/manga/${favorite.id}`} className="flex items-center gap-3 text-xs text-muted">
-                    <Cover manga={favorite} className="h-14 w-10 rounded-sm" />
+                    <Cover manga={favorite} sizes="40px" className="h-14 w-10 rounded-sm" />
                     <span>
                         Manga favorito
                         <strong className="block text-sm text-white">{favorite.title}</strong>
@@ -105,5 +106,13 @@ export default function Profile() {
                 />
             </section>
         </div>
+    );
+}
+
+export default function Profile({ covers }: { covers: CoverMap }) {
+    return (
+        <CoverProvider value={covers}>
+            <ProfileContent />
+        </CoverProvider>
     );
 }

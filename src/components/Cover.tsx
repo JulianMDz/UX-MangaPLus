@@ -1,16 +1,18 @@
-import { useState } from "react";
 import type { Manga } from "../data/mangas";
+import { useCover } from "./CoverContext";
 
 interface Props {
     manga: Manga;
     className?: string;
+    /** Ancho real con el que se muestra, para que el navegador elija la variante correcta. */
+    sizes?: string;
 }
 
-// Si la imagen no existe en /public/covers, muestra el título sobre un bloque.
-export default function Cover({ manga, className = "" }: Props) {
-    const [failed, setFailed] = useState(false);
+// Si la portada no existe en src/assets/covers, muestra el título sobre un bloque.
+export default function Cover({ manga, className = "", sizes = "(min-width: 768px) 20vw, 50vw" }: Props) {
+    const image = useCover(manga.cover);
 
-    if (failed) {
+    if (!image) {
         return (
             <div
                 role="img"
@@ -24,10 +26,14 @@ export default function Cover({ manga, className = "" }: Props) {
 
     return (
         <img
-            src={manga.cover}
+            src={image.src}
+            srcSet={image.srcSet}
+            sizes={sizes}
+            width={image.width}
+            height={image.height}
             alt={`Portada de ${manga.title}`}
             loading="lazy"
-            onError={() => setFailed(true)}
+            decoding="async"
             className={`object-cover ${className}`}
         />
     );

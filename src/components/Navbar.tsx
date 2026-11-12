@@ -1,5 +1,8 @@
 import { useEffect } from "react";
 import { getSession } from "../lib/storage";
+import { getBrand } from "../lib/images";
+
+const logo = getBrand("logo-manga-plus");
 
 interface Props {
     current: "inicio" | "lista" | "perfil";
@@ -21,7 +24,11 @@ export default function Navbar({ current, query = "" }: Props) {
         <header className="sticky top-0 z-10 border-b border-line bg-base/90 backdrop-blur">
             <nav className="mx-auto flex max-w-6xl items-center gap-6 px-4 py-3">
                 <a href="/" aria-label="Manga Plus, inicio">
-                    <img src="/logo-manga-plus.png" alt="Manga Plus" width="80" height="42" className="h-9 w-auto" />
+                    {logo ? (
+                        <img src={logo.src} alt="Manga Plus" width={logo.width} height={logo.height} className="h-9 w-auto" />
+                    ) : (
+                        <span className="text-sm font-bold text-accent">MANGA PLUS</span>
+                    )}
                 </a>
                 <a href="/" className={linkClass(current === "inicio")}>
                     Inicio
