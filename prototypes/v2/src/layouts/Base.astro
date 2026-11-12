@@ -1,0 +1,28 @@
+---
+import { url } from "../lib/paths";
+import "../styles/global.css";
+import VersionBar from "../components/VersionBar.astro";
+
+interface Props {
+    title: string;
+    description?: string;
+}
+
+const { title, description = "Manga Plus es una plataforma para leer manga online." } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="description" content={description} />
+        <link rel="icon" type="image/svg+xml" href={url("/favicon.svg")} />
+        <link rel="icon" href={url("/favicon.ico")} />
+        <title>{title}</title>
+    </head>
+    <body>
+        <VersionBar />
+        <slot />
+    </body>
+</html>

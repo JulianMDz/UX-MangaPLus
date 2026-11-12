@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+/* Tokens de diseño: Tailwind genera utilidades a partir de ellos
+   (bg-surface, text-accent, border-line, text-status-soon, etc.) */
+@theme {
+  --color-base: #0f0f14;
+  --color-panel: #121218;
+  --color-surface: #1c1c26;
+  --color-line: #3a3a4a;
+  --color-muted: #c9c9d4;
+  --color-accent: #e8160c;
+
+  --color-status-available: #2fd58a;
+  --color-status-airing: #4aa3ff;
+  --color-status-soon: #f5b335;
+  --color-status-unavailable: #ff7a8a;
+
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    @apply min-h-screen bg-base font-sans text-white;
+  }
+}
+
+/* Fondo de puntos del collage */
+@utility bg-dots {
+  background:
+    radial-gradient(circle at 1px 1px, #2a2a36 1px, transparent 0) 0 0 / 12px 12px,
+    var(--color-base);
+}
+
+/* Lector: scroll sin barras visibles (como el zoom del navegador, no hay "sliders"). */
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

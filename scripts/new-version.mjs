@@ -1,6 +1,6 @@
 // Cierra la versión actual y crea la siguiente como copia: prototypes/vN -> prototypes/vN+1.
 // La anterior queda CONGELADA (es lo que vieron los testers); se edita solo la nueva.
-import { cpSync, existsSync, readFileSync, writeFileSync } from "node:fs";
+import { cpSync, existsSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { FROZEN_FILE, freezeVersion, ITERATIONS, listVersions, PROTOTYPES, ROOT } from "./lib.mjs";
 
@@ -19,11 +19,19 @@ if (existsSync(target)) {
     process.exit(1);
 }
 
-// La copia se hace ANTES de congelar, y sin artefactos generados ni el manifiesto de congelación.
+// La copia se hace ANTES de congelar, y sin artefactos generados, el manifiesto de
+// congelación ni las imágenes (van en shared/assets y se enlazan, no se copian).
 cpSync(join(PROTOTYPES, latest), target, {
     recursive: true,
-    filter: (src) => !/[\\/](\.astro|dist|node_modules)([\\/]|$)/.test(src) && !src.endsWith(FROZEN_FILE),
+    filter: (src) =>
+        !/[\\/](\.astro|dist|node_modules)([\\/]|$)/.test(src) &&
+        !src.endsWith(FROZEN_FILE) &&
+        !/[\\/]src[\\/]assets([\\/]|$)/.test(src),
 });
+
+// Las imágenes y demás recursos visuales viven en shared/assets (raíz del repo) para no
+// duplicarlos en cada versión: cada prototipo accede a ellos con un junction en src/assets.
+symlinkSync(join(ROOT, "shared", "assets"), join(target, "src", "assets"), "junction");
 
 const frozenFiles = freezeVersion(latest);
 
