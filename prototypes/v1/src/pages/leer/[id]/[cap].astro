@@ -1,6 +1,7 @@
 ---
 import Base from "../../../layouts/Base.astro";
 import Reader from "../../../components/reader/Reader";
+import { chapterPages } from "../../../data/chapter-pages";
 import { isReadable, mangas } from "../../../data/mangas";
 
 export function getStaticPaths() {
@@ -15,8 +16,9 @@ export function getStaticPaths() {
 }
 
 const { manga, chapter } = Astro.props;
+const pages = chapterPages(manga.id, chapter);
 ---
 
 <Base title={`Leer | ${manga.title} - Capítulo ${chapter}`}>
-    <Reader id={manga.id} chapter={chapter} client:only="react" />
+    <Reader id={manga.id} chapter={chapter} pages={pages} client:only="react" />
 </Base>

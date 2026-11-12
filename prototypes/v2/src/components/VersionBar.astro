@@ -1,0 +1,54 @@
+---
+import { url, VERSION } from "../lib/paths";
+
+// Solo existe en el deploy del showcase (en desarrollo no hay prefijo /vN).
+const show = VERSION !== "dev";
+const base = url("/");
+---
+
+{
+    show && (
+        <div class="relative z-20 flex h-9 items-center gap-4 border-b border-line bg-panel px-4 text-xs">
+            <a
+                href="/"
+                class="text-muted transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+            >
+                ← Showcase
+            </a>
+            <nav id="version-pills" aria-label="Versiones del prototipo" class="flex items-center gap-1.5">
+                <span class="text-muted">Versión:</span>
+                <span aria-current="page" class="rounded-full bg-white px-3 py-0.5 font-semibold text-base">
+                    {VERSION}
+                </span>
+            </nav>
+        </div>
+    )
+}
+
+<script define:vars={{ current: VERSION, base, show }}>
+    // Completa las pills con el resto de versiones, conservando la pantalla actual
+    // (/v1/mi-lista -> /v2/mi-lista) para poder comparar la misma vista.
+    if (show) {
+        const nav = document.getElementById("version-pills");
+        const rest = location.pathname.startsWith(base) ? location.pathname.slice(base.length) : "";
+
+        fetch("/versions.json")
+            .then((res) => (res.ok ? res.json() : []))
+            .then((versions) => {
+                for (const version of versions) {
+                    if (version === current) continue;
+                    const link = document.createElement("a");
+                    link.href = `/${version}/${rest}${location.search}`;
+                    link.textContent = version;
+                    link.className =
+                        "rounded-full border border-line px-3 py-0.5 text-muted transition-colors hover:border-white hover:text-white";
+                    nav.append(link);
+                }
+                // Mantener el orden v1, v2, v3 con la actual en su sitio.
+                const items = [...nav.querySelectorAll("a, [aria-current]")];
+                items.sort((a, b) => a.textContent.trim().localeCompare(b.textContent.trim(), undefined, { numeric: true }));
+                items.forEach((el) => nav.append(el));
+            })
+            .catch(() => {});
+    }
+</script>

@@ -13,7 +13,8 @@
     "freeze": "node scripts/freeze.mjs",
     "preview": "astro preview",
     "new-version": "node scripts/new-version.mjs",
-    "astro": "astro"
+    "astro": "astro",
+    "dev:v2": "astro dev --root prototypes/v2"
   },
   "dependencies": {
     "@astrojs/react": "^7.1.2",

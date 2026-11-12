@@ -41,9 +41,11 @@ scripts/                   check · freeze · new-version · build-all
    Cada versión vive bajo `/vN/`; una ruta absoluta como `href="/login"` la saca de su versión.
 2. **`localStorage` solo desde `src/lib/storage.ts`.** Las claves llevan el prefijo de la versión (`mangaplus:v1:...`);
    las versiones comparten origen y, si no, se pisarían la sesión, la lista y el progreso.
-3. **Imágenes en `src/assets/`** (portadas en `covers/`, logo en `brand/`), no en `public/`, y se buscan por nombre con
-   `src/lib/images.ts`. En archivos `.astro` usar `<Image>` de `astro:assets`; en React las portadas llegan ya
-   optimizadas por `CoverContext` (ver `src/lib/optimized-covers.ts`).
+3. **Imágenes en `src/assets/`** (portadas en `covers/`, logo en `brand/`, páginas en `mangas/`). Los archivos
+   reales viven en `shared/assets/` (raíz del repo) y cada versión los enlaza con un **junction** en
+   `src/assets` (lo crea `npm run new-version`); así no se duplican megas en cada iteración. Se buscan por
+   nombre con `src/lib/images.ts`. En archivos `.astro` usar `<Image>` de `astro:assets`; en React las portadas
+   llegan ya optimizadas por `CoverContext` (ver `src/lib/optimized-covers.ts`).
 4. **Astro por defecto, React solo donde hay interactividad** (estado, eventos, `localStorage`). Lo estático va en `.astro`.
 5. Tailwind con los tokens de `src/styles/global.css` (`bg-surface`, `text-accent`, `text-status-*`...). Estados de
    manga en `src/data/statuses.ts`; no repetir colores ni etiquetas.
