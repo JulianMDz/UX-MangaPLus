@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@astrojs/react": "^7.1.2",
+    "@microsoft/clarity": "^1.0.2",
     "@tailwindcss/vite": "^4.3.4",
     "astro": "^7.4.5",
     "react": "^19.3.1",
