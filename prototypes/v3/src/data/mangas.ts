@@ -46,7 +46,7 @@ export const mangas: Manga[] = [
         id: "blue-lock",
         title: "Blue Lock",
         cover: "blue-lock",
-        status: "soon",
+        status: "unavailable",
         genre: "Shonen · Deportes",
         description:
             "Trescientos delanteros encerrados en un programa que busca crear al egoísta futbolista que llevará a Japón a ganar el Mundial.",
@@ -59,7 +59,7 @@ export const mangas: Manga[] = [
         id: "one-piece",
         title: "One Piece",
         cover: "one-piece",
-        status: "soon",
+        status: "unavailable",
         genre: "Shonen · Aventura",
         description:
             "Monkey D. Luffy y su tripulación recorren los mares en busca del tesoro más grande del mundo: el One Piece.",
@@ -87,7 +87,7 @@ export const mangas: Manga[] = [
         id: "boku-no-hero",
         title: "Boku no hero",
         cover: "boku-no-hero",
-        status: "available",
+        status: "unavailable",
         genre: "Shonen · Superhéroes",
         description:
             "En un mundo donde casi todos tienen poderes, Izuku Midoriya, sin ninguno, sueña con convertirse en el mayor héroe.",
@@ -113,7 +113,7 @@ export const mangas: Manga[] = [
         id: "spy-x-family",
         title: "Spy x Family",
         cover: "spy-family",
-        status: "available",
+        status: "unavailable",
         genre: "Comedia · Acción",
         description:
             "Un espía, una asesina y una telépata forman una familia falsa sin saber el secreto de los demás.",
@@ -153,7 +153,7 @@ export const mangas: Manga[] = [
         id: "tokyo-ghoul",
         title: "Tokyo Ghoul",
         cover: "tokyo-ghoul",
-        status: "soon",
+        status: "unavailable",
         genre: "Fantasía oscura",
         description:
             "Ken Kaneki sobrevive a un ataque de un ghoul y queda atrapado entre dos mundos: el humano y el de los devoradores.",
