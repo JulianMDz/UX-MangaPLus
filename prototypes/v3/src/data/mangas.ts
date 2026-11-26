@@ -46,7 +46,7 @@ export const mangas: Manga[] = [
         id: "blue-lock",
         title: "Blue Lock",
         cover: "blue-lock",
-        status: "airing",
+        status: "soon",
         genre: "Shonen · Deportes",
         description:
             "Trescientos delanteros encerrados en un programa que busca crear al egoísta futbolista que llevará a Japón a ganar el Mundial.",
@@ -100,7 +100,7 @@ export const mangas: Manga[] = [
         id: "chainsaw-man",
         title: "Chainsawman",
         cover: "chainsaw-man",
-        status: "airing",
+        status: "available",
         genre: "Shonen · Oscuro",
         description:
             "Denji, un joven endeudado, se fusiona con su perro demonio y se convierte en Chainsaw Man para cazar demonios.",
@@ -126,7 +126,7 @@ export const mangas: Manga[] = [
         id: "one-punch-man",
         title: "One punch man",
         cover: "one-punch-man",
-        status: "airing",
+        status: "available",
         genre: "Lucha · Comedia",
         description:
             "Saitama, un héroe tan fuerte que derrota a cualquiera de un solo golpe, busca un rival que le devuelva la emoción.",
