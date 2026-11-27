@@ -20,6 +20,9 @@ export default function MangaCard({ manga }: { manga: Manga }) {
                         <StatusBadge status={manga.status} />
                     </span>
                 </div>
+                <div className="pointer-events-none absolute inset-x-0 bottom-0 h-1/2 translate-y-full overflow-y-auto bg-base/90 p-2 text-xs text-white opacity-0 backdrop-blur transition-all duration-200 group-hover:translate-y-0 group-hover:opacity-100 flex items-start">
+                    <p>{manga.description}</p>
+                </div>
             </div>
             <h3 className="mt-2 text-sm font-semibold">{manga.title}</h3>
             <p className="text-xs text-muted">
